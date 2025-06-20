@@ -80,27 +80,38 @@ thead {
   color: white;
 }
 
-.btn-saiba-mais {
-  width: 100%;
-  padding: 12px 24px; /* Aumentar o padding para mais espaço ao redor do botão */
-  font-size: 16px; /* Aumentar o tamanho da fonte */
-  background-color: #ff5500;
-  color: white;
-  font-weight: 700;
+.btn-editar,
+.btn-deletar {
+  padding: 8px 16px;
   border: none;
-  cursor: pointer;
   border-radius: 4px;
+  cursor: pointer;
+  margin-right: 8px;
   transition: background-color 0.3s ease;
 }
 
-.btn-saiba-mais:hover {
-  background-color: #ff9500;
+.btn-editar {
+  background-color: #28a745;
+  color: white;
 }
 
-/* Aumentar o espaço para a coluna do botão na tabela */
+.btn-editar:hover {
+  background-color: #218838;
+}
+
+.btn-deletar {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-deletar:hover {
+  background-color: #c82333;
+}
+
+/* Ajustar a coluna de ação */
 #movies-table th:nth-child(4),
 #movies-table td:nth-child(4) {
-  width: 180px; /* Ajuste o valor conforme necessário */
+  width: 200px;
 }
 
 tfoot {

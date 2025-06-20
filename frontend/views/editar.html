@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Filme - API Filmes</title>
+  <link rel="stylesheet" href="../src/css/style.css">
+  <link rel="stylesheet" href="../src/css/form-filmes.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <h1>Filmes API</h1>
+      <ul>
+        <li><a href="../index.html">Filmes</a></li>
+        <li><a href="./cadastro.html">Adicionar Filme</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <form id="edit-form">
+      <label for="title">Título do Filme:</label>
+      <input type="text" id="title" name="title" required>
+
+      <label for="poster">URL do Poster:</label>
+      <input type="url" id="poster" name="poster">
+
+      <label for="overview">Sinopse:</label>
+      <textarea id="overview" name="overview" rows="5"></textarea>
+
+      <button type="submit">Salvar Alterações</button>
+    </form>
+  </main>
+  <footer>
+    <p>© 2023 API Filmes</p>
+  </footer>
+  <script>
+    // Obtém o ID do filme da URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const movieId = urlParams.get('id');
+
+    // Carrega os dados do filme
+    async function loadMovieData() {
+      try {
+        const response = await fetch(`http://localhost:5555/movies/${movieId}`);
+        const movie = await response.json();
+        document.getElementById('title').value = movie.title;
+        document.getElementById('poster').value = movie.poster || '';
+        document.getElementById('overview').value = movie.overview || '';
+      } catch (error) {
+        console.error('Erro ao carregar filme:', error);
+        alert('Erro ao carregar dados do filme.');
+      }
+    }
+
+    // Envia o formulário de edição
+    document.getElementById('edit-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const title = document.getElementById('title').value;
+      const poster = document.getElementById('poster').value;
+      const overview = document.getElementById('overview').value;
+
+      try {
+        const response = await fetch(`http://localhost:5555/movies/${movieId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title, poster, overview })
+        });
+        const result = await response.json();
+        alert(result.msg);
+        window.location.href = '../index.html'; // Volta para a lista
+      } catch (error) {
+        console.error('Erro ao atualizar filme:', error);
+        alert('Erro ao atualizar filme.');
+      }
+    });
+
+    // Carrega os dados ao iniciar
+    loadMovieData();
+  </script>
+</body>
+
+</html>
